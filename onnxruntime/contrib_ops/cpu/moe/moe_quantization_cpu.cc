@@ -60,22 +60,8 @@ bool CanUseMlasQ4Dequant(int64_t num_bits, int64_t block_size) {
 
 bool CanUseMlasQ4Gemm(int64_t expert_weight_bits, int64_t block_size,
                       int64_t rows, int64_t cols, MLAS_BLK_QUANT_TYPE& out_qtype) {
-  if (expert_weight_bits != 4) {
-    return false;
-  }
-
-  if (block_size == 64) {
-    out_qtype = BlkQ4Sym64;
-  } else if (block_size == 128) {
-    out_qtype = BlkQ4Sym128;
-  } else if (block_size == 0) {
-    out_qtype = BlkQ4Sym;
-  } else {
-    return false;
-  }
-
-  size_t expected_size = MlasQ4GemmPackBSize(out_qtype, static_cast<size_t>(cols), static_cast<size_t>(rows));
-  return expected_size > 0;
+  // TEMPORARY: Disable direct Q4 GEMM
+  return false;
 }
 
 }  // namespace
@@ -686,7 +672,7 @@ Status QMoECPU<T>::Compute(OpKernelContext* context) const {
       const T* fc1_scales_ptr;
 
       if (is_fc1_block_wise) {
-        const int64_t fc1_blocks_per_row = fc1_scales_dims[2];
+        const int64_t fc1_blocks_per_row = (hidden_size + block_size_ - 1) / block_size_;
         fc1_scales_ptr = fc1_scales_data + expert_idx * fc1_out_features * fc1_blocks_per_row;
       } else {
         fc1_scales_ptr = fc1_scales_data + expert_idx * fc1_out_features;
@@ -755,14 +741,16 @@ Status QMoECPU<T>::Compute(OpKernelContext* context) const {
       // Use parallel dequantization when we have multiple blocks and sufficient work per thread
       // Threshold of 32 features ensures each thread has meaningful work to justify threading overhead
       if (num_dequant_blocks > 1 && fc1_out_features >= 32) {
+        // Calculate blocks_per_row for the current layer (FC1 uses hidden_size as input dimension)
+        const int64_t fc1_blocks_per_row = is_fc1_block_wise ? (hidden_size + block_size_ - 1) / block_size_ : 1;
         concurrency::ThreadPool::TrySimpleParallelFor(tp, static_cast<int>(num_dequant_blocks), [&](std::ptrdiff_t block_idx) {
           const int64_t start_row = block_idx * dequant_block_size;
           const int64_t end_row = std::min(start_row + dequant_block_size, fc1_out_features);
           const auto offset = expert_idx * fc1_out_features * fc1_packed_cols + start_row * fc1_packed_cols;
           DequantizeBlock(fc1_weights_data + offset,
-                          fc1_scales_ptr + (is_fc1_block_wise ? start_row * fc1_scales_dims[2] : start_row),
+                          fc1_scales_ptr + (is_fc1_block_wise ? start_row * fc1_blocks_per_row : start_row),
                           is_fc1_block_wise ? block_size_ : 0, expert_weight_bits_,
-                          end_row - start_row, hidden_size, B1_dequant + start_row * hidden_size, tp);
+                          end_row - start_row, hidden_size, B1_dequant + start_row * hidden_size, nullptr);
         });
       } else {
         DequantizeBlock(fc1_weights_data + expert_idx * fc1_out_features * fc1_packed_cols,
@@ -855,7 +843,7 @@ Status QMoECPU<T>::Compute(OpKernelContext* context) const {
       const T* fc2_scales_ptr;
 
       if (is_fc2_block_wise) {
-        const int64_t fc2_blocks_per_row = fc2_scales_dims[2];
+        const int64_t fc2_blocks_per_row = (inter_size + block_size_ - 1) / block_size_;
         fc2_scales_ptr = fc2_scales_data + expert_idx * hidden_size * fc2_blocks_per_row;
       } else {
         fc2_scales_ptr = fc2_scales_data + expert_idx * hidden_size;
@@ -924,14 +912,16 @@ Status QMoECPU<T>::Compute(OpKernelContext* context) const {
       // Use parallel dequantization when we have multiple blocks and sufficient work per thread
       // Threshold of 32 for hidden_size ensures each thread has meaningful work to justify threading overhead
       if (num_fc2_dequant_blocks > 1 && hidden_size >= 32) {
+        // Calculate blocks_per_row for the current layer (FC2 uses inter_size as input dimension)
+        const int64_t fc2_blocks_per_row = is_fc2_block_wise ? (inter_size + block_size_ - 1) / block_size_ : 1;
         concurrency::ThreadPool::TrySimpleParallelFor(tp, static_cast<int>(num_fc2_dequant_blocks), [&](std::ptrdiff_t block_idx) {
           const int64_t start_row = block_idx * fc2_dequant_block_size;
           const int64_t end_row = std::min(start_row + fc2_dequant_block_size, hidden_size);
           const auto offset = expert_idx * hidden_size * fc2_packed_cols + start_row * fc2_packed_cols;
           DequantizeBlock(fc2_weights_data + offset,
-                          fc2_scales_ptr + (is_fc2_block_wise ? start_row * fc2_scales_dims[2] : start_row),
+                          fc2_scales_ptr + (is_fc2_block_wise ? start_row * fc2_blocks_per_row : start_row),
                           is_fc2_block_wise ? block_size_ : 0, expert_weight_bits_,
-                          end_row - start_row, inter_size, B2_dequant + start_row * inter_size, tp);
+                          end_row - start_row, inter_size, B2_dequant + start_row * inter_size, nullptr);
         });
       } else {
         DequantizeBlock(fc2_weights_data + expert_idx * hidden_size * fc2_packed_cols,
