@@ -471,11 +471,19 @@ class HypergredientFormulator:
                 total_cost += best_candidate.cost_per_gram * (percentage / 100.0) * 0.5  # 50ml cost
         
         # Calculate overall metrics
-        total_score = sum(hg['score'] for hg in selected_hypergredients.values()) / len(selected_hypergredients)
-        synergy_score = self._calculate_synergy_score(selected_hypergredients)
-        predicted_efficacy = self._predict_efficacy(selected_hypergredients, request.target_concerns)
-        stability_months = self._estimate_stability(selected_hypergredients)
-        safety_profile = self._assess_safety_profile(selected_hypergredients)
+        if selected_hypergredients:
+            total_score = sum(hg['score'] for hg in selected_hypergredients.values()) / len(selected_hypergredients)
+            synergy_score = self._calculate_synergy_score(selected_hypergredients)
+            predicted_efficacy = self._predict_efficacy(selected_hypergredients, request.target_concerns)
+            stability_months = self._estimate_stability(selected_hypergredients)
+            safety_profile = self._assess_safety_profile(selected_hypergredients)
+        else:
+            # Fallback for empty formulation
+            total_score = 0.0
+            synergy_score = 5.0
+            predicted_efficacy = 0.0
+            stability_months = 12
+            safety_profile = "Unknown - no ingredients selected"
         
         return OptimalFormulation(
             selected_hypergredients=selected_hypergredients,
