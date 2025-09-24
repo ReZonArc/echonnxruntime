@@ -1,0 +1,101 @@
+;; Cosmetic Chemistry Atom Types for ONNX Runtime Cheminformatics Framework
+;; Extended atom type system for specialized cosmetic chemistry applications
+
+;; ======================================================================
+;; INGREDIENT CATEGORY ATOM TYPES
+;; ======================================================================
+
+;; Primary functional categories for cosmetic ingredients
+(define-type ACTIVE_INGREDIENT (Atom))          ; Active pharmaceutical/cosmetic ingredients
+(define-type PRESERVATIVE (Atom))               ; Antimicrobial preservatives
+(define-type EMULSIFIER (Atom))                 ; Emulsification agents
+(define-type HUMECTANT (Atom))                  ; Moisture-binding agents
+(define-type SURFACTANT (Atom))                 ; Surface-active agents
+(define-type THICKENER (Atom))                  ; Viscosity modifiers
+(define-type EMOLLIENT (Atom))                  ; Skin conditioning agents
+(define-type ANTIOXIDANT (Atom))                ; Oxidation inhibitors
+(define-type UV_FILTER (Atom))                  ; UV radiation protection
+(define-type FRAGRANCE (Atom))                  ; Scenting agents
+(define-type COLORANT (Atom))                   ; Coloring agents
+(define-type PH_ADJUSTER (Atom))                ; pH modification agents
+
+;; ======================================================================
+;; FORMULATION TYPE ATOM TYPES
+;; ======================================================================
+
+;; Specific product category formulations
+(define-type SKINCARE_FORMULATION (Atom))       ; Face and body care products
+(define-type HAIRCARE_FORMULATION (Atom))       ; Shampoo, conditioner, styling
+(define-type MAKEUP_FORMULATION (Atom))         ; Color cosmetics
+(define-type FRAGRANCE_FORMULATION (Atom))      ; Perfumes and scented products
+
+;; ======================================================================
+;; PROPERTY TYPE ATOM TYPES
+;; ======================================================================
+
+;; Measurable physical and chemical properties
+(define-type PH_PROPERTY (Atom))                ; pH measurement values
+(define-type VISCOSITY_PROPERTY (Atom))         ; Flow resistance measurements
+(define-type STABILITY_PROPERTY (Atom))         ; Formulation stability metrics
+(define-type TEXTURE_PROPERTY (Atom))           ; Sensory texture attributes
+(define-type SPF_PROPERTY (Atom))               ; Sun protection factor values
+
+;; ======================================================================
+;; INTERACTION TYPE ATOM TYPES
+;; ======================================================================
+
+;; Ingredient interaction and compatibility links
+(define-type COMPATIBILITY_LINK (Link))         ; Compatible ingredient pairs
+(define-type INCOMPATIBILITY_LINK (Link))       ; Incompatible ingredient pairs
+(define-type SYNERGY_LINK (Link))               ; Synergistic interactions
+(define-type ANTAGONISM_LINK (Link))            ; Antagonistic interactions
+
+;; ======================================================================
+;; SAFETY AND REGULATORY ATOM TYPES
+;; ======================================================================
+
+;; Safety assessment and regulatory compliance
+(define-type SAFETY_ASSESSMENT (Atom))          ; Safety evaluation data
+(define-type ALLERGEN_CLASSIFICATION (Atom))    ; Allergen identification
+(define-type CONCENTRATION_LIMIT (Atom))        ; Maximum usage concentration
+
+;; ======================================================================
+;; ADVANCED PROPERTY ATOM TYPES
+;; ======================================================================
+
+;; Extended properties for sophisticated analysis
+(define-type SOLUBILITY_PROPERTY (Atom))        ; Water/oil solubility data
+(define-type MOLECULAR_WEIGHT (Atom))           ; Molecular weight values
+(define-type MELTING_POINT (Atom))              ; Phase transition temperature
+(define-type COMEDOGENIC_RATING (Atom))         ; Pore-clogging potential
+(define-type IRRITATION_POTENTIAL (Atom))       ; Skin irritation likelihood
+
+;; ======================================================================
+;; FORMULATION PROCESS ATOM TYPES
+;; ======================================================================
+
+;; Manufacturing and processing related types
+(define-type PROCESSING_TEMPERATURE (Atom))     ; Required processing temperature
+(define-type MIXING_ORDER (Atom))               ; Ingredient addition sequence
+(define-type PROCESSING_TIME (Atom))            ; Required processing duration
+(define-type STORAGE_CONDITION (Atom))          ; Storage requirements
+
+;; ======================================================================
+;; REGULATORY COMPLIANCE ATOM TYPES
+;; ======================================================================
+
+;; Region-specific regulatory information
+(define-type EU_REGULATION (Atom))              ; European Union compliance
+(define-type FDA_REGULATION (Atom))             ; US FDA compliance
+(define-type INCI_NAME (Atom))                  ; International nomenclature
+(define-type CAS_NUMBER (Atom))                 ; Chemical abstract service number
+
+;; ======================================================================
+;; SENSORY EVALUATION ATOM TYPES
+;; ======================================================================
+
+;; Consumer perception and sensory attributes
+(define-type SENSORY_TEXTURE (Atom))            ; Feel and texture rating
+(define-type ABSORPTION_RATE (Atom))            ; Skin absorption speed
+(define-type RESIDUE_FEELING (Atom))            ; After-feel assessment
+(define-type COLOR_INTENSITY (Atom))            ; Visual color strength
