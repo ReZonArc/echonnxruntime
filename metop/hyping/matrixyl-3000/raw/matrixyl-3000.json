@@ -1,0 +1,45 @@
+{
+  "classification": {
+    "class_description": "Collagen Synthesis Promoters",
+    "hypergredient_class": "H.CS",
+    "primary_function": "collagen_synthesis",
+    "secondary_functions": [
+      "skin_repair"
+    ]
+  },
+  "identity": {
+    "inci_name": "Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7",
+    "name": "Matrixyl 3000",
+    "slug": "matrixyl-3000"
+  },
+  "optimization_metrics": {
+    "bioavailability": 0.75,
+    "confidence_score": null,
+    "efficacy_score": 9.0,
+    "synergy_score": null
+  },
+  "pipeline_stage": "raw",
+  "provenance": {
+    "generated_at": 1778168908.5600352,
+    "generator": "generate_primitives.py",
+    "ingredient_key": "matrixyl_3000",
+    "source_module": "hypergredient_framework.HypergredientDatabase"
+  },
+  "relationships": {
+    "incompatibilities": [],
+    "synergies": [
+      "vitamin_c"
+    ]
+  },
+  "safety_stability_cost": {
+    "clinical_evidence": "Strong",
+    "cost_per_gram_zar": 120.0,
+    "pH_max": 7.0,
+    "pH_min": 5.0,
+    "safety_score": 9.0,
+    "stability_conditions": {
+      "stable": true
+    }
+  },
+  "schema_version": "1.0.0"
+}

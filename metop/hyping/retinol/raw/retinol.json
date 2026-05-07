@@ -1,0 +1,46 @@
+{
+  "classification": {
+    "class_description": "Cellular Turnover Agents",
+    "hypergredient_class": "H.CT",
+    "primary_function": "cellular_turnover",
+    "secondary_functions": [
+      "anti_aging"
+    ]
+  },
+  "identity": {
+    "inci_name": "Retinol",
+    "name": "Retinol",
+    "slug": "retinol"
+  },
+  "optimization_metrics": {
+    "bioavailability": 0.6,
+    "confidence_score": null,
+    "efficacy_score": 8.0,
+    "synergy_score": null
+  },
+  "pipeline_stage": "raw",
+  "provenance": {
+    "generated_at": 1778168908.5600352,
+    "generator": "generate_primitives.py",
+    "ingredient_key": "retinol",
+    "source_module": "hypergredient_framework.HypergredientDatabase"
+  },
+  "relationships": {
+    "incompatibilities": [
+      "aha",
+      "bha"
+    ],
+    "synergies": []
+  },
+  "safety_stability_cost": {
+    "clinical_evidence": "Strong",
+    "cost_per_gram_zar": 180.0,
+    "pH_max": 6.5,
+    "pH_min": 5.5,
+    "safety_score": 7.0,
+    "stability_conditions": {
+      "oxygen_sensitive": true
+    }
+  },
+  "schema_version": "1.0.0"
+}

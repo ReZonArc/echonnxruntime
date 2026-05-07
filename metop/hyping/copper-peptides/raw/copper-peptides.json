@@ -1,0 +1,45 @@
+{
+  "classification": {
+    "class_description": "Collagen Synthesis Promoters",
+    "hypergredient_class": "H.CS",
+    "primary_function": "collagen_synthesis",
+    "secondary_functions": [
+      "skin_remodeling"
+    ]
+  },
+  "identity": {
+    "inci_name": "Copper Tripeptide-1",
+    "name": "Copper Peptides",
+    "slug": "copper-peptides"
+  },
+  "optimization_metrics": {
+    "bioavailability": 0.7,
+    "confidence_score": null,
+    "efficacy_score": 8.0,
+    "synergy_score": null
+  },
+  "pipeline_stage": "raw",
+  "provenance": {
+    "generated_at": 1778168908.5600352,
+    "generator": "generate_primitives.py",
+    "ingredient_key": "copper_peptides",
+    "source_module": "hypergredient_framework.HypergredientDatabase"
+  },
+  "relationships": {
+    "incompatibilities": [
+      "vitamin_c"
+    ],
+    "synergies": []
+  },
+  "safety_stability_cost": {
+    "clinical_evidence": "Strong",
+    "cost_per_gram_zar": 390.0,
+    "pH_max": 8.0,
+    "pH_min": 6.0,
+    "safety_score": 8.0,
+    "stability_conditions": {
+      "stable": true
+    }
+  },
+  "schema_version": "1.0.0"
+}

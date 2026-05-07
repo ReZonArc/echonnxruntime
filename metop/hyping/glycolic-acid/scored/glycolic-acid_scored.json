@@ -1,0 +1,60 @@
+{
+  "ai_insights": {
+    "model_version": "v3.0",
+    "ranked_concerns": []
+  },
+  "benchmark": {
+    "cost_tier": "budget",
+    "multi_objective_score": 0.6884,
+    "ph_range_width": 1.0,
+    "stability_label": "stable"
+  },
+  "classification": {
+    "class_description": "Cellular Turnover Agents",
+    "hypergredient_class": "H.CT",
+    "primary_function": "cellular_turnover",
+    "secondary_functions": [
+      "exfoliation"
+    ]
+  },
+  "identity": {
+    "inci_name": "Glycolic Acid",
+    "name": "Glycolic Acid",
+    "slug": "glycolic-acid"
+  },
+  "optimization_metrics": {
+    "bioavailability": 0.9,
+    "confidence_score": 0.725,
+    "efficacy_score": 6.0,
+    "synergy_score": 5.0
+  },
+  "pipeline_stage": "scored",
+  "provenance": {
+    "generated_at": 1778168908.5600352,
+    "generator": "generate_primitives.py",
+    "ingredient_key": "glycolic_acid",
+    "refined_at": 1778168912.4121544,
+    "refiner": "refine_primitives.py",
+    "scored_at": 1778168912.4121544,
+    "scorer": "refine_primitives.py",
+    "source_module": "hypergredient_framework.HypergredientDatabase",
+    "source_stage": "refined"
+  },
+  "relationships": {
+    "incompatibilities": [
+      "retinoids"
+    ],
+    "synergies": []
+  },
+  "safety_stability_cost": {
+    "clinical_evidence": "Strong",
+    "cost_per_gram_zar": 45.0,
+    "pH_max": 4.5,
+    "pH_min": 3.5,
+    "safety_score": 7.0,
+    "stability_conditions": {
+      "stable": true
+    }
+  },
+  "schema_version": "1.0.0"
+}
