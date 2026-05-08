@@ -1,0 +1,259 @@
+{
+  "entries": [
+    {
+      "class_description": "Antioxidant Systems",
+      "confidence_score": 0.8825,
+      "hypergredient_class": "H.AO",
+      "inci_name": "Astaxanthin",
+      "name": "Astaxanthin",
+      "paths": {
+        "raw": "hyping/astaxanthin/raw/astaxanthin.json",
+        "refined": "hyping/astaxanthin/refined/astaxanthin.json",
+        "report": "hyping/astaxanthin/reports/astaxanthin_report.md",
+        "scored": "hyping/astaxanthin/scored/astaxanthin_scored.json"
+      },
+      "primary_function": "antioxidant",
+      "slug": "astaxanthin",
+      "synergy_score": 7.75
+    },
+    {
+      "class_description": "Cellular Turnover Agents",
+      "confidence_score": 0.7591,
+      "hypergredient_class": "H.CT",
+      "inci_name": "Bakuchiol",
+      "name": "Bakuchiol",
+      "paths": {
+        "raw": "hyping/bakuchiol/raw/bakuchiol.json",
+        "refined": "hyping/bakuchiol/refined/bakuchiol.json",
+        "report": "hyping/bakuchiol/reports/bakuchiol_report.md",
+        "scored": "hyping/bakuchiol/scored/bakuchiol_scored.json"
+      },
+      "primary_function": "cellular_turnover",
+      "slug": "bakuchiol",
+      "synergy_score": 7.9071
+    },
+    {
+      "class_description": "Barrier Repair Complex",
+      "confidence_score": 0.8863,
+      "hypergredient_class": "H.BR",
+      "inci_name": "Ceramide NP",
+      "name": "Ceramides",
+      "paths": {
+        "raw": "hyping/ceramides/raw/ceramides.json",
+        "refined": "hyping/ceramides/refined/ceramides.json",
+        "report": "hyping/ceramides/reports/ceramides_report.md",
+        "scored": "hyping/ceramides/scored/ceramides_scored.json"
+      },
+      "primary_function": "barrier_repair",
+      "slug": "ceramides",
+      "synergy_score": 8.1286
+    },
+    {
+      "class_description": "Collagen Synthesis Promoters",
+      "confidence_score": 0.8,
+      "hypergredient_class": "H.CS",
+      "inci_name": "Copper Tripeptide-1",
+      "name": "Copper Peptides",
+      "paths": {
+        "raw": "hyping/copper-peptides/raw/copper-peptides.json",
+        "refined": "hyping/copper-peptides/refined/copper-peptides.json",
+        "report": "hyping/copper-peptides/reports/copper-peptides_report.md",
+        "scored": "hyping/copper-peptides/scored/copper-peptides_scored.json"
+      },
+      "primary_function": "collagen_synthesis",
+      "slug": "copper-peptides",
+      "synergy_score": 5.0
+    },
+    {
+      "class_description": "Hydration Systems",
+      "confidence_score": 0.8713,
+      "hypergredient_class": "H.HY",
+      "inci_name": "Glycerin",
+      "name": "Glycerin",
+      "paths": {
+        "raw": "hyping/glycerin/raw/glycerin.json",
+        "refined": "hyping/glycerin/refined/glycerin.json",
+        "report": "hyping/glycerin/reports/glycerin_report.md",
+        "scored": "hyping/glycerin/scored/glycerin_scored.json"
+      },
+      "primary_function": "hydration",
+      "slug": "glycerin",
+      "synergy_score": 8.1286
+    },
+    {
+      "class_description": "Cellular Turnover Agents",
+      "confidence_score": 0.725,
+      "hypergredient_class": "H.CT",
+      "inci_name": "Glycolic Acid",
+      "name": "Glycolic Acid",
+      "paths": {
+        "raw": "hyping/glycolic-acid/raw/glycolic-acid.json",
+        "refined": "hyping/glycolic-acid/refined/glycolic-acid.json",
+        "report": "hyping/glycolic-acid/reports/glycolic-acid_report.md",
+        "scored": "hyping/glycolic-acid/scored/glycolic-acid_scored.json"
+      },
+      "primary_function": "cellular_turnover",
+      "slug": "glycolic-acid",
+      "synergy_score": 5.0
+    },
+    {
+      "class_description": "Hydration Systems",
+      "confidence_score": 0.9354,
+      "hypergredient_class": "H.HY",
+      "inci_name": "Sodium Hyaluronate",
+      "name": "Hyaluronic Acid",
+      "paths": {
+        "raw": "hyping/hyaluronic-acid/raw/hyaluronic-acid.json",
+        "refined": "hyping/hyaluronic-acid/refined/hyaluronic-acid.json",
+        "report": "hyping/hyaluronic-acid/reports/hyaluronic-acid_report.md",
+        "scored": "hyping/hyaluronic-acid/scored/hyaluronic-acid_scored.json"
+      },
+      "primary_function": "hydration",
+      "slug": "hyaluronic-acid",
+      "synergy_score": 8.045
+    },
+    {
+      "class_description": "Collagen Synthesis Promoters",
+      "confidence_score": 0.865,
+      "hypergredient_class": "H.CS",
+      "inci_name": "Palmitoyl Tripeptide-1, Palmitoyl Tetrapeptide-7",
+      "name": "Matrixyl 3000",
+      "paths": {
+        "raw": "hyping/matrixyl-3000/raw/matrixyl-3000.json",
+        "refined": "hyping/matrixyl-3000/refined/matrixyl-3000.json",
+        "report": "hyping/matrixyl-3000/reports/matrixyl-3000_report.md",
+        "scored": "hyping/matrixyl-3000/scored/matrixyl-3000_scored.json"
+      },
+      "primary_function": "collagen_synthesis",
+      "slug": "matrixyl-3000",
+      "synergy_score": 5.0
+    },
+    {
+      "class_description": "Barrier Repair Complex",
+      "confidence_score": 0.8696,
+      "hypergredient_class": "H.BR",
+      "inci_name": "Niacinamide",
+      "name": "Niacinamide",
+      "paths": {
+        "raw": "hyping/niacinamide/raw/niacinamide.json",
+        "refined": "hyping/niacinamide/refined/niacinamide.json",
+        "report": "hyping/niacinamide/reports/niacinamide_report.md",
+        "scored": "hyping/niacinamide/scored/niacinamide_scored.json"
+      },
+      "primary_function": "barrier_repair",
+      "slug": "niacinamide",
+      "synergy_score": 7.9571
+    },
+    {
+      "class_description": "Antioxidant Systems",
+      "confidence_score": 0.73,
+      "hypergredient_class": "H.AO",
+      "inci_name": "Resveratrol",
+      "name": "Resveratrol",
+      "paths": {
+        "raw": "hyping/resveratrol/raw/resveratrol.json",
+        "refined": "hyping/resveratrol/refined/resveratrol.json",
+        "report": "hyping/resveratrol/reports/resveratrol_report.md",
+        "scored": "hyping/resveratrol/scored/resveratrol_scored.json"
+      },
+      "primary_function": "antioxidant",
+      "slug": "resveratrol",
+      "synergy_score": 5.0
+    },
+    {
+      "class_description": "Cellular Turnover Agents",
+      "confidence_score": 0.765,
+      "hypergredient_class": "H.CT",
+      "inci_name": "Retinol",
+      "name": "Retinol",
+      "paths": {
+        "raw": "hyping/retinol/raw/retinol.json",
+        "refined": "hyping/retinol/refined/retinol.json",
+        "report": "hyping/retinol/reports/retinol_report.md",
+        "scored": "hyping/retinol/scored/retinol_scored.json"
+      },
+      "primary_function": "cellular_turnover",
+      "slug": "retinol",
+      "synergy_score": 5.0
+    },
+    {
+      "class_description": "Cellular Turnover Agents",
+      "confidence_score": 0.835,
+      "hypergredient_class": "H.CT",
+      "inci_name": "Tretinoin",
+      "name": "Tretinoin",
+      "paths": {
+        "raw": "hyping/tretinoin/raw/tretinoin.json",
+        "refined": "hyping/tretinoin/refined/tretinoin.json",
+        "report": "hyping/tretinoin/reports/tretinoin_report.md",
+        "scored": "hyping/tretinoin/scored/tretinoin_scored.json"
+      },
+      "primary_function": "cellular_turnover",
+      "slug": "tretinoin",
+      "synergy_score": 5.0
+    },
+    {
+      "class_description": "Collagen Synthesis Promoters",
+      "confidence_score": 0.842,
+      "hypergredient_class": "H.CS",
+      "inci_name": "L-Ascorbic Acid",
+      "name": "Vitamin C (L-Ascorbic Acid)",
+      "paths": {
+        "raw": "hyping/vitamin-c-l-ascorbic-acid/raw/vitamin-c-l-ascorbic-acid.json",
+        "refined": "hyping/vitamin-c-l-ascorbic-acid/refined/vitamin-c-l-ascorbic-acid.json",
+        "report": "hyping/vitamin-c-l-ascorbic-acid/reports/vitamin-c-l-ascorbic-acid_report.md",
+        "scored": "hyping/vitamin-c-l-ascorbic-acid/scored/vitamin-c-l-ascorbic-acid_scored.json"
+      },
+      "primary_function": "collagen_synthesis",
+      "slug": "vitamin-c-l-ascorbic-acid",
+      "synergy_score": 7.7
+    },
+    {
+      "class_description": "Antioxidant Systems",
+      "confidence_score": 0.8213,
+      "hypergredient_class": "H.AO",
+      "inci_name": "Tocopherol",
+      "name": "Vitamin E",
+      "paths": {
+        "raw": "hyping/vitamin-e/raw/vitamin-e.json",
+        "refined": "hyping/vitamin-e/refined/vitamin-e.json",
+        "report": "hyping/vitamin-e/reports/vitamin-e_report.md",
+        "scored": "hyping/vitamin-e/scored/vitamin-e_scored.json"
+      },
+      "primary_function": "antioxidant",
+      "slug": "vitamin-e",
+      "synergy_score": 7.1261
+    }
+  ],
+  "hypergredient_classes": [
+    "H.AI",
+    "H.AO",
+    "H.BR",
+    "H.CS",
+    "H.CT",
+    "H.HY",
+    "H.MB",
+    "H.ML",
+    "H.PD",
+    "H.SE"
+  ],
+  "pipeline_stage": "published",
+  "published_at": 1778168916.9477398,
+  "publisher": "publish_primitives.py",
+  "schema_version": "1.0.0",
+  "stats_by_class": {
+    "H.AO": 3,
+    "H.BR": 2,
+    "H.CS": 3,
+    "H.CT": 4,
+    "H.HY": 2
+  },
+  "stats_by_primary_function": {
+    "antioxidant": 3,
+    "barrier_repair": 2,
+    "cellular_turnover": 4,
+    "collagen_synthesis": 3,
+    "hydration": 2
+  },
+  "total_ingredients": 14
+}

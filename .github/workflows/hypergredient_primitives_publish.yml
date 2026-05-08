@@ -1,0 +1,262 @@
+# Stage 3 – Hypergredient Primitive Publish / Sync Workflow
+#
+# This workflow:
+#   1. Downloads the refined artifact produced by Stage 2.
+#   2. Runs publish_primitives.py to generate Markdown reports and the
+#      global index / run manifest.
+#   3. Runs the full validation suite.
+#   4. Opens a pull request with the updated metop/hyping/** tree so that
+#      changes are reviewed before landing on the default branch.
+#
+# Trigger modes:
+#   - workflow_dispatch  – manual, with optional dry-run
+#   - workflow_run       – automatically after the refinement workflow completes
+
+name: "Hypergredient Primitives – Stage 3: Publish"
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry-run only (no PR created)"
+        required: false
+        type: boolean
+        default: false
+      python_version:
+        description: "Python version"
+        required: false
+        type: string
+        default: "3.10"
+      artifact_retention_days:
+        description: "Days to retain the published artifact"
+        required: false
+        type: number
+        default: 14
+      pr_branch:
+        description: "Name of the branch to push the updated primitives to"
+        required: false
+        type: string
+        default: "chore/update-hypergredient-primitives"
+
+  workflow_run:
+    workflows: ["Hypergredient Primitives – Stage 2: Refine"]
+    types:
+      - completed
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: hypergredient-primitives-publish-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    name: "Stage 3: Publish Primitives"
+    runs-on: ubuntu-latest
+    # Only proceed if Stage 2 succeeded (when triggered by workflow_run)
+    if: >
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
+
+    env:
+      OUTPUT_ROOT: metop
+      PR_BRANCH: ${{ inputs.pr_branch || 'chore/update-hypergredient-primitives' }}
+      DRY_RUN: ${{ inputs.dry_run || 'false' }}
+
+    steps:
+      # ------------------------------------------------------------------
+      # 1. Checkout
+      # ------------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history so we can push a branch
+
+      # ------------------------------------------------------------------
+      # 2. Python
+      # ------------------------------------------------------------------
+      - name: Set up Python ${{ inputs.python_version || '3.10' }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python_version || '3.10' }}
+
+      - name: Install Python dependencies
+        run: python -m pip install --upgrade pip
+
+      # ------------------------------------------------------------------
+      # 3. Download the refined artifact from Stage 2
+      # ------------------------------------------------------------------
+      - name: Download refined primitives artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: metop-hyping-primitives-refined
+          path: ${{ env.OUTPUT_ROOT }}/
+        continue-on-error: true   # graceful: artifact may not exist on first run
+
+      # If no artifact exists yet (e.g. first-ever run), generate and refine
+      # inline so the publish step always has something to work with.
+      - name: Bootstrap primitives if artifact not available
+        working-directory: examples/python
+        run: |
+          HYPING="${{ github.workspace }}/${{ env.OUTPUT_ROOT }}/hyping"
+          if [ ! -d "${HYPING}" ]; then
+            echo "ℹ️  No refined artifact found – running full pipeline inline."
+            python generate_primitives.py --output-root "${{ github.workspace }}/${{ env.OUTPUT_ROOT }}"
+            python refine_primitives.py   --output-root "${{ github.workspace }}/${{ env.OUTPUT_ROOT }}"
+          else
+            echo "ℹ️  Refined artifact found – skipping inline generation."
+          fi
+
+      # ------------------------------------------------------------------
+      # 4. Run publisher
+      # ------------------------------------------------------------------
+      - name: Publish primitives (Stage 3)
+        id: publish
+        working-directory: examples/python
+        run: |
+          DRY_FLAG=""
+          if [ "${{ env.DRY_RUN }}" = "true" ]; then
+            DRY_FLAG="--dry-run"
+          fi
+
+          python publish_primitives.py \
+            --output-root "${{ github.workspace }}/${{ env.OUTPUT_ROOT }}" \
+            $DRY_FLAG \
+            | tee /tmp/publish_output.txt
+
+          TOTAL=$(grep -oP '(?<=Done – )\d+' /tmp/publish_output.txt || echo "0")
+          echo "total_published=${TOTAL}" >> "$GITHUB_OUTPUT"
+
+      # ------------------------------------------------------------------
+      # 5. Full validation
+      # ------------------------------------------------------------------
+      - name: Validate published primitive tree
+        if: env.DRY_RUN != 'true'
+        working-directory: examples/python
+        run: |
+          python validate_primitives.py \
+            --output-root "${{ github.workspace }}/${{ env.OUTPUT_ROOT }}"
+
+      # ------------------------------------------------------------------
+      # 6. Run test suites
+      # ------------------------------------------------------------------
+      - name: Run full test suite
+        if: env.DRY_RUN != 'true'
+        working-directory: examples/python
+        run: |
+          python -m unittest test_primitives_pipeline test_hypergredient_framework test_meta_optimization_engine -v
+
+      # ------------------------------------------------------------------
+      # 7. Commit updated primitives to a PR branch
+      # ------------------------------------------------------------------
+      - name: Configure git identity
+        if: env.DRY_RUN != 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create / reset PR branch and commit changes
+        if: env.DRY_RUN != 'true'
+        id: commit
+        run: |
+          git checkout -B "${{ env.PR_BRANCH }}"
+
+          git add "${{ env.OUTPUT_ROOT }}/"
+          if git diff --cached --quiet; then
+            echo "no_changes=true" >> "$GITHUB_OUTPUT"
+            echo "ℹ️  No changes to commit."
+          else
+            git commit -m "chore(metop): refresh hypergredient primitives [run ${{ github.run_id }}]"
+            git push origin "${{ env.PR_BRANCH }}" --force
+            echo "no_changes=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ------------------------------------------------------------------
+      # 8. Open (or update) a pull request
+      # ------------------------------------------------------------------
+      - name: Create or update pull request
+        if: env.DRY_RUN != 'true' && steps.commit.outputs.no_changes != 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: `${context.repo.owner}:${{ env.PR_BRANCH }}`,
+              base: 'main',
+              state: 'open',
+            });
+
+            const title = '🧬 chore(metop): refresh hypergredient primitives';
+            const body = [
+              '## Hypergredient Primitives Update',
+              '',
+              'This PR was automatically generated by the **Stage 3: Publish** workflow.',
+              '',
+              '### What changed',
+              `- Pipeline run ID: \`${{ github.run_id }}\``,
+              `- Primitives published: **${{ steps.publish.outputs.total_published }}**`,
+              '',
+              '### Checklist',
+              '- [x] Stage 1 (generate) completed',
+              '- [x] Stage 2 (refine) completed',
+              '- [x] Stage 3 (publish) completed',
+              '- [x] Validation passed',
+              '- [x] All tests passed',
+              '',
+              '_Review the `metop/hyping/` tree and merge when satisfied._',
+            ].join('\n');
+
+            if (prs.length > 0) {
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prs[0].number,
+                title,
+                body,
+              });
+              core.info(`Updated existing PR #${prs[0].number}`);
+            } else {
+              const { data: pr } = await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head: '${{ env.PR_BRANCH }}',
+                base: 'main',
+                title,
+                body,
+                draft: false,
+              });
+              core.info(`Created PR #${pr.number}: ${pr.html_url}`);
+              core.setOutput('pr_number', pr.number);
+            }
+
+      # ------------------------------------------------------------------
+      # 9. Upload published artifact
+      # ------------------------------------------------------------------
+      - name: Upload published primitives artifact
+        if: env.DRY_RUN != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: metop-hyping-primitives-published
+          path: ${{ env.OUTPUT_ROOT }}/
+          if-no-files-found: warn
+          retention-days: ${{ inputs.artifact_retention_days || 14 }}
+
+      # ------------------------------------------------------------------
+      # 10. Job summary
+      # ------------------------------------------------------------------
+      - name: Write job summary
+        if: always()
+        run: |
+          {
+            echo "## 📦 Hypergredient Primitive Publish – Stage 3"
+            echo ""
+            echo "| Property | Value |"
+            echo "|---|---|"
+            echo "| Primitives published | \`${{ steps.publish.outputs.total_published }}\` |"
+            echo "| PR branch | \`${{ env.PR_BRANCH }}\` |"
+            echo "| Dry-run | \`${{ env.DRY_RUN }}\` |"
+            echo "| Run | [\`${{ github.run_id }}\`](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |"
+          } >> "$GITHUB_STEP_SUMMARY"

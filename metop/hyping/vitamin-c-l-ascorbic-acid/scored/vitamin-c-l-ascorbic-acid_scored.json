@@ -1,0 +1,64 @@
+{
+  "ai_insights": {
+    "model_version": "v3.0",
+    "ranked_concerns": []
+  },
+  "benchmark": {
+    "cost_tier": "mid",
+    "multi_objective_score": 0.7011,
+    "ph_range_width": 1.0,
+    "stability_label": "sensitive"
+  },
+  "classification": {
+    "class_description": "Collagen Synthesis Promoters",
+    "hypergredient_class": "H.CS",
+    "primary_function": "collagen_synthesis",
+    "secondary_functions": [
+      "antioxidant",
+      "brightening"
+    ]
+  },
+  "identity": {
+    "inci_name": "L-Ascorbic Acid",
+    "name": "Vitamin C (L-Ascorbic Acid)",
+    "slug": "vitamin-c-l-ascorbic-acid"
+  },
+  "optimization_metrics": {
+    "bioavailability": 0.85,
+    "confidence_score": 0.842,
+    "efficacy_score": 8.0,
+    "synergy_score": 7.7
+  },
+  "pipeline_stage": "scored",
+  "provenance": {
+    "generated_at": 1778168908.5600352,
+    "generator": "generate_primitives.py",
+    "ingredient_key": "vitamin_c_l_aa",
+    "refined_at": 1778168912.4121544,
+    "refiner": "refine_primitives.py",
+    "scored_at": 1778168912.4121544,
+    "scorer": "refine_primitives.py",
+    "source_module": "hypergredient_framework.HypergredientDatabase",
+    "source_stage": "refined"
+  },
+  "relationships": {
+    "incompatibilities": [
+      "copper_peptides"
+    ],
+    "synergies": [
+      "ferulic_acid",
+      "vitamin_e"
+    ]
+  },
+  "safety_stability_cost": {
+    "clinical_evidence": "Strong",
+    "cost_per_gram_zar": 85.0,
+    "pH_max": 4.0,
+    "pH_min": 3.0,
+    "safety_score": 8.0,
+    "stability_conditions": {
+      "oxidation_sensitive": true
+    }
+  },
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,46 @@
+{
+  "classification": {
+    "class_description": "Cellular Turnover Agents",
+    "hypergredient_class": "H.CT",
+    "primary_function": "cellular_turnover",
+    "secondary_functions": [
+      "acne_treatment",
+      "anti_aging"
+    ]
+  },
+  "identity": {
+    "inci_name": "Tretinoin",
+    "name": "Tretinoin",
+    "slug": "tretinoin"
+  },
+  "optimization_metrics": {
+    "bioavailability": 0.85,
+    "confidence_score": null,
+    "efficacy_score": 10.0,
+    "synergy_score": null
+  },
+  "pipeline_stage": "raw",
+  "provenance": {
+    "generated_at": 1778168908.5600352,
+    "generator": "generate_primitives.py",
+    "ingredient_key": "tretinoin",
+    "source_module": "hypergredient_framework.HypergredientDatabase"
+  },
+  "relationships": {
+    "incompatibilities": [
+      "benzoyl_peroxide"
+    ],
+    "synergies": []
+  },
+  "safety_stability_cost": {
+    "clinical_evidence": "Strong",
+    "cost_per_gram_zar": 15.0,
+    "pH_max": 6.5,
+    "pH_min": 5.5,
+    "safety_score": 6.0,
+    "stability_conditions": {
+      "uv_sensitive": true
+    }
+  },
+  "schema_version": "1.0.0"
+}

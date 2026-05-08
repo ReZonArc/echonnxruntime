@@ -1,0 +1,47 @@
+{
+  "classification": {
+    "class_description": "Barrier Repair Complex",
+    "hypergredient_class": "H.BR",
+    "primary_function": "barrier_repair",
+    "secondary_functions": [
+      "brightening",
+      "sebum_regulation"
+    ]
+  },
+  "identity": {
+    "inci_name": "Niacinamide",
+    "name": "Niacinamide",
+    "slug": "niacinamide"
+  },
+  "optimization_metrics": {
+    "bioavailability": 0.85,
+    "confidence_score": null,
+    "efficacy_score": 8.0,
+    "synergy_score": null
+  },
+  "pipeline_stage": "raw",
+  "provenance": {
+    "generated_at": 1778168908.5600352,
+    "generator": "generate_primitives.py",
+    "ingredient_key": "niacinamide",
+    "source_module": "hypergredient_framework.HypergredientDatabase"
+  },
+  "relationships": {
+    "incompatibilities": [],
+    "synergies": [
+      "ceramides",
+      "hyaluronic_acid"
+    ]
+  },
+  "safety_stability_cost": {
+    "clinical_evidence": "Strong",
+    "cost_per_gram_zar": 75.0,
+    "pH_max": 8.0,
+    "pH_min": 5.0,
+    "safety_score": 9.0,
+    "stability_conditions": {
+      "stable": true
+    }
+  },
+  "schema_version": "1.0.0"
+}

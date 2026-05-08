@@ -1,0 +1,45 @@
+{
+  "classification": {
+    "class_description": "Antioxidant Systems",
+    "hypergredient_class": "H.AO",
+    "primary_function": "antioxidant",
+    "secondary_functions": [
+      "anti_aging"
+    ]
+  },
+  "identity": {
+    "inci_name": "Resveratrol",
+    "name": "Resveratrol",
+    "slug": "resveratrol"
+  },
+  "optimization_metrics": {
+    "bioavailability": 0.6,
+    "confidence_score": null,
+    "efficacy_score": 8.0,
+    "synergy_score": null
+  },
+  "pipeline_stage": "raw",
+  "provenance": {
+    "generated_at": 1778168908.5600352,
+    "generator": "generate_primitives.py",
+    "ingredient_key": "resveratrol",
+    "source_module": "hypergredient_framework.HypergredientDatabase"
+  },
+  "relationships": {
+    "incompatibilities": [],
+    "synergies": [
+      "ferulic_acid"
+    ]
+  },
+  "safety_stability_cost": {
+    "clinical_evidence": "Moderate",
+    "cost_per_gram_zar": 190.0,
+    "pH_max": 7.0,
+    "pH_min": 5.0,
+    "safety_score": 8.0,
+    "stability_conditions": {
+      "moderate": true
+    }
+  },
+  "schema_version": "1.0.0"
+}

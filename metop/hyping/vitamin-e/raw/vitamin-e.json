@@ -1,0 +1,46 @@
+{
+  "classification": {
+    "class_description": "Antioxidant Systems",
+    "hypergredient_class": "H.AO",
+    "primary_function": "antioxidant",
+    "secondary_functions": [
+      "moisturizing"
+    ]
+  },
+  "identity": {
+    "inci_name": "Tocopherol",
+    "name": "Vitamin E",
+    "slug": "vitamin-e"
+  },
+  "optimization_metrics": {
+    "bioavailability": 0.8,
+    "confidence_score": null,
+    "efficacy_score": 7.0,
+    "synergy_score": null
+  },
+  "pipeline_stage": "raw",
+  "provenance": {
+    "generated_at": 1778168908.5600352,
+    "generator": "generate_primitives.py",
+    "ingredient_key": "vitamin_e",
+    "source_module": "hypergredient_framework.HypergredientDatabase"
+  },
+  "relationships": {
+    "incompatibilities": [],
+    "synergies": [
+      "astaxanthin",
+      "vitamin_c"
+    ]
+  },
+  "safety_stability_cost": {
+    "clinical_evidence": "Strong",
+    "cost_per_gram_zar": 50.0,
+    "pH_max": 9.0,
+    "pH_min": 4.0,
+    "safety_score": 9.0,
+    "stability_conditions": {
+      "stable": true
+    }
+  },
+  "schema_version": "1.0.0"
+}

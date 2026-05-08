@@ -1,0 +1,149 @@
+# Reusable Workflow: Generate Raw Hypergredient Primitives
+#
+# This reusable workflow is the entry-point for Stage 1 of the
+# hypergredient-primitives pipeline.  It:
+#   1. Checks out the repository.
+#   2. Sets up Python.
+#   3. Runs the generator CLI (generate_primitives.py).
+#   4. Validates the raw output (validate_primitives.py – raw stage only).
+#   5. Uploads the raw primitive tree as a GitHub Actions artifact.
+#
+# Callers must pass `python_version` and optionally override `output_root`.
+
+name: "[Reusable] Generate Hypergredient Primitives"
+
+on:
+  workflow_call:
+    inputs:
+      python_version:
+        description: "Python version to use"
+        required: false
+        type: string
+        default: "3.10"
+      output_root:
+        description: "Relative path (from repo root) to the metop output root"
+        required: false
+        type: string
+        default: "metop"
+      dry_run:
+        description: "Set to 'true' to skip writing files (validation phase A)"
+        required: false
+        type: boolean
+        default: false
+      artifact_retention_days:
+        description: "Number of days to retain the uploaded artifact"
+        required: false
+        type: number
+        default: 7
+    outputs:
+      artifact_name:
+        description: "Name of the uploaded raw-primitives artifact"
+        value: ${{ jobs.generate.outputs.artifact_name }}
+      total_generated:
+        description: "Number of primitives generated"
+        value: ${{ jobs.generate.outputs.total_generated }}
+
+jobs:
+  generate:
+    name: "Generate Raw Primitives"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      artifact_name: ${{ steps.set_outputs.outputs.artifact_name }}
+      total_generated: ${{ steps.generate.outputs.total_generated }}
+
+    steps:
+      # ------------------------------------------------------------------
+      # 1. Checkout
+      # ------------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      # ------------------------------------------------------------------
+      # 2. Python setup
+      # ------------------------------------------------------------------
+      - name: Set up Python ${{ inputs.python_version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python_version }}
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+
+      # ------------------------------------------------------------------
+      # 3. Run generator (Stage 1)
+      # ------------------------------------------------------------------
+      - name: Generate raw hypergredient primitives
+        id: generate
+        working-directory: examples/python
+        run: |
+          DRY_RUN_FLAG=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            DRY_RUN_FLAG="--dry-run"
+          fi
+
+          python generate_primitives.py \
+            --output-root "${{ github.workspace }}/${{ inputs.output_root }}" \
+            $DRY_RUN_FLAG \
+            | tee /tmp/generate_output.txt
+
+          # Extract count from output for downstream reference
+          TOTAL=$(grep -oP '(?<=Done – )\d+' /tmp/generate_output.txt || echo "0")
+          echo "total_generated=${TOTAL}" >> "$GITHUB_OUTPUT"
+
+      # ------------------------------------------------------------------
+      # 4. Validate raw output (schema + folder structure only)
+      # ------------------------------------------------------------------
+      - name: Validate raw primitive schema
+        if: inputs.dry_run == false
+        working-directory: examples/python
+        run: |
+          python validate_primitives.py \
+            --output-root "${{ github.workspace }}/${{ inputs.output_root }}"
+
+      # ------------------------------------------------------------------
+      # 5. Run existing regression test suite
+      # ------------------------------------------------------------------
+      - name: Run hypergredient framework unit tests
+        if: inputs.dry_run == false
+        working-directory: examples/python
+        run: python -m unittest test_hypergredient_framework -v
+
+      # ------------------------------------------------------------------
+      # 6. Summarise generation run
+      # ------------------------------------------------------------------
+      - name: Write job summary
+        if: always()
+        run: |
+          {
+            echo "## 🧬 Hypergredient Primitive Generation – Stage 1: raw"
+            echo ""
+            echo "| Property | Value |"
+            echo "|---|---|"
+            echo "| Python version | \`${{ inputs.python_version }}\` |"
+            echo "| Output root | \`${{ inputs.output_root }}\` |"
+            echo "| Dry-run | \`${{ inputs.dry_run }}\` |"
+            echo "| Primitives generated | \`${{ steps.generate.outputs.total_generated }}\` |"
+            echo "| Run | [\`${{ github.run_id }}\`](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # ------------------------------------------------------------------
+      # 7. Upload raw artifact
+      # ------------------------------------------------------------------
+      - name: Set artifact name output
+        id: set_outputs
+        run: |
+          echo "artifact_name=metop-hyping-primitives-raw" >> "$GITHUB_OUTPUT"
+
+      - name: Upload raw primitives artifact
+        if: inputs.dry_run == false
+        uses: actions/upload-artifact@v4
+        with:
+          name: metop-hyping-primitives-raw
+          path: ${{ inputs.output_root }}/
+          if-no-files-found: error
+          retention-days: ${{ inputs.artifact_retention_days }}

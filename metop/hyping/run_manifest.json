@@ -1,0 +1,20 @@
+{
+  "run_at": 1778168916.9477398,
+  "schema_version": "1.0.0",
+  "stage": "published",
+  "stats_by_class": {
+    "H.AO": 3,
+    "H.BR": 2,
+    "H.CS": 3,
+    "H.CT": 4,
+    "H.HY": 2
+  },
+  "stats_by_primary_function": {
+    "antioxidant": 3,
+    "barrier_repair": 2,
+    "cellular_turnover": 4,
+    "collagen_synthesis": 3,
+    "hydration": 2
+  },
+  "total_published": 14
+}

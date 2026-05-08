@@ -1,0 +1,46 @@
+{
+  "classification": {
+    "class_description": "Hydration Systems",
+    "hypergredient_class": "H.HY",
+    "primary_function": "hydration",
+    "secondary_functions": [
+      "plumping"
+    ]
+  },
+  "identity": {
+    "inci_name": "Sodium Hyaluronate",
+    "name": "Hyaluronic Acid",
+    "slug": "hyaluronic-acid"
+  },
+  "optimization_metrics": {
+    "bioavailability": 0.9,
+    "confidence_score": null,
+    "efficacy_score": 9.0,
+    "synergy_score": null
+  },
+  "pipeline_stage": "raw",
+  "provenance": {
+    "generated_at": 1778168908.5600352,
+    "generator": "generate_primitives.py",
+    "ingredient_key": "hyaluronic_acid",
+    "source_module": "hypergredient_framework.HypergredientDatabase"
+  },
+  "relationships": {
+    "incompatibilities": [],
+    "synergies": [
+      "ceramides",
+      "glycerin"
+    ]
+  },
+  "safety_stability_cost": {
+    "clinical_evidence": "Strong",
+    "cost_per_gram_zar": 250.0,
+    "pH_max": 8.0,
+    "pH_min": 4.0,
+    "safety_score": 10.0,
+    "stability_conditions": {
+      "stable": true
+    }
+  },
+  "schema_version": "1.0.0"
+}

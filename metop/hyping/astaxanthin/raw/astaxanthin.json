@@ -1,0 +1,45 @@
+{
+  "classification": {
+    "class_description": "Antioxidant Systems",
+    "hypergredient_class": "H.AO",
+    "primary_function": "antioxidant",
+    "secondary_functions": [
+      "anti_inflammatory"
+    ]
+  },
+  "identity": {
+    "inci_name": "Astaxanthin",
+    "name": "Astaxanthin",
+    "slug": "astaxanthin"
+  },
+  "optimization_metrics": {
+    "bioavailability": 0.65,
+    "confidence_score": null,
+    "efficacy_score": 9.0,
+    "synergy_score": null
+  },
+  "pipeline_stage": "raw",
+  "provenance": {
+    "generated_at": 1778168908.5600352,
+    "generator": "generate_primitives.py",
+    "ingredient_key": "astaxanthin",
+    "source_module": "hypergredient_framework.HypergredientDatabase"
+  },
+  "relationships": {
+    "incompatibilities": [],
+    "synergies": [
+      "vitamin_e"
+    ]
+  },
+  "safety_stability_cost": {
+    "clinical_evidence": "Strong",
+    "cost_per_gram_zar": 360.0,
+    "pH_max": 8.0,
+    "pH_min": 5.0,
+    "safety_score": 9.0,
+    "stability_conditions": {
+      "light_sensitive": true
+    }
+  },
+  "schema_version": "1.0.0"
+}
